@@ -54,16 +54,22 @@
 
 ## Phase 3: User Story 1 - 姿態穩定控制 (Priority: P1) 🎯 MVP
 
-**Goal**: 即時讀取六軸感測器數據並計算飛機姿態，輸出修正指令維持穩定
+**Goal**: 即時讀取六軸感測器數據並使用 EKF 計算飛機姿態，輸出修正指令維持穩定
 
 **Independent Test**: 在地面測試台傾斜控制器，驗證姿態數據更新與補償輸出正確對應
+
+**Algorithm**: Extended Kalman Filter (EKF) - 詳見 [research.md](./research.md)
 
 ### Tests for User Story 1
 
 - [ ] T015 [P] [US1] Write unit test for IMU data structures in components/imu_sensor/test/test_imu_sensor.c
 - [ ] T016 [P] [US1] Write unit test for attitude estimator in components/attitude_estimator/test/test_attitude_estimator.c
+- [ ] T016a [P] [US1] Write unit test for matrix operations in components/attitude_estimator/test/test_matrix_math.c
+- [ ] T016b [P] [US1] Write unit test for EKF core algorithm in components/attitude_estimator/test/test_ekf_core.c
 
 ### Implementation for User Story 1
+
+#### IMU Sensor Component
 
 - [ ] T017 [P] [US1] Create components/imu_sensor/ directory structure with CMakeLists.txt
 - [ ] T018 [P] [US1] Define IMU public API in components/imu_sensor/include/imu_sensor.h
@@ -72,15 +78,32 @@
 - [ ] T021 [US1] Implement digital low-pass filter in components/imu_sensor/src/imu_filter.c
 - [ ] T022 [US1] Implement sensor calibration (offset, scale) in components/imu_sensor/src/imu_calibration.c
 - [ ] T023 [US1] Implement data quality detection in components/imu_sensor/src/imu_sensor.c
+
+#### Attitude Estimator Component (EKF)
+
 - [ ] T024 [P] [US1] Create components/attitude_estimator/ directory structure with CMakeLists.txt
 - [ ] T025 [P] [US1] Define attitude estimator API in components/attitude_estimator/include/attitude_estimator.h
-- [ ] T026 [US1] Implement complementary filter for attitude estimation in components/attitude_estimator/src/attitude_estimator.c
-- [ ] T027 [US1] Implement vTask_IMU_Read (priority: configMAX_PRIORITIES-1) in components/imu_sensor/src/imu_task.c
-- [ ] T028 [US1] Implement vTask_Attitude_Compute (priority: configMAX_PRIORITIES-2) in components/attitude_estimator/src/attitude_task.c
-- [ ] T029 [US1] Create Queue for IMU→Attitude data passing in main/main.c
-- [ ] T030 [US1] Verify 100Hz loop timing with uxTaskGetStackHighWaterMark() in main/main.c
+- [ ] T025a [P] [US1] Define EKF types and constants in components/attitude_estimator/include/ekf_types.h
+- [ ] T025b [P] [US1] Define matrix math API in components/attitude_estimator/include/matrix_math.h
+- [ ] T026a [US1] Implement 6x6 matrix operations (multiply, transpose, add) in components/attitude_estimator/src/matrix_math.c
+- [ ] T026b [US1] Implement 6x6 matrix inversion (Gauss-Jordan) in components/attitude_estimator/src/matrix_math.c
+- [ ] T026c [US1] Implement EKF state prediction (陀螺儀積分) in components/attitude_estimator/src/ekf_core.c
+- [ ] T026d [US1] Implement EKF covariance prediction (P = FPF' + Q) in components/attitude_estimator/src/ekf_core.c
+- [ ] T026e [US1] Implement EKF measurement update (加速度計) in components/attitude_estimator/src/ekf_core.c
+- [ ] T026f [US1] Implement EKF GPS heading update (速度 > 5m/s 時) in components/attitude_estimator/src/ekf_core.c
+- [ ] T026g [US1] Implement Joseph form covariance update for numerical stability in components/attitude_estimator/src/ekf_core.c
+- [ ] T026 [US1] Implement attitude estimator wrapper integrating EKF in components/attitude_estimator/src/attitude_estimator.c
 
-**Checkpoint**: 姿態估算功能完成，可獨立測試驗證 100Hz 迴路與 <2° 精度
+#### Task Integration
+
+- [ ] T027 [US1] Implement vTask_IMU_Read (priority: configMAX_PRIORITIES-1) in components/imu_sensor/src/imu_task.c
+- [ ] T028 [US1] Implement vTask_Attitude_Compute (priority: configMAX_PRIORITIES-2, Stack: 8192) in components/attitude_estimator/src/attitude_task.c
+- [ ] T029 [US1] Create Queue for IMU→Attitude data passing in main/main.c
+- [ ] T029a [US1] Create Queue for GPS→Attitude heading update in main/main.c
+- [ ] T030 [US1] Verify 100Hz loop timing with uxTaskGetStackHighWaterMark() in main/main.c
+- [ ] T030a [US1] Profile EKF computation time (<500μs target) in components/attitude_estimator/src/attitude_task.c
+
+**Checkpoint**: EKF 姿態估算功能完成，可獨立測試驗證 100Hz 迴路與 <2° 精度
 
 ---
 
@@ -292,17 +315,18 @@ Task: "Create components/attitude_estimator/ directory structure"
 
 | Metric | Value |
 |--------|-------|
-| Total Tasks | 83 |
+| Total Tasks | 95 |
 | Phase 1 (Setup) | 5 tasks |
 | Phase 2 (Foundational) | 9 tasks |
-| Phase 3 (US1 - 姿態控制) | 16 tasks |
+| Phase 3 (US1 - 姿態控制 + EKF) | 28 tasks |
 | Phase 4 (US2 - 動力控制) | 10 tasks |
 | Phase 5 (US3 - GPS 導航) | 11 tasks |
 | Phase 6 (US4 - XBee 遙測) | 13 tasks |
 | Phase 7 (US5 - 系統監控) | 9 tasks |
 | Phase 8 (Integration) | 10 tasks |
-| Parallel Opportunities | 24 tasks marked [P] |
-| MVP Scope | Phase 1-4 (40 tasks) |
+| Parallel Opportunities | 28 tasks marked [P] |
+| MVP Scope | Phase 1-4 (52 tasks) |
+| EKF Related | 12 new tasks (T016a-b, T025a-b, T026a-g, T029a, T030a) |
 
 ---
 
