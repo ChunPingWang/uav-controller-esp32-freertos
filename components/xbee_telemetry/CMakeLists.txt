@@ -1,0 +1,13 @@
+idf_component_register(
+    SRCS
+        "src/xbee_driver.c"
+        "src/telemetry_protocol.c"
+        "src/telemetry_task.c"
+    INCLUDE_DIRS
+        "include"
+    REQUIRES
+        flight_controller
+        driver
+    PRIV_REQUIRES
+        esp_timer
+)

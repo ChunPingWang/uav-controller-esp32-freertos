@@ -24,11 +24,11 @@
 
 **Purpose**: ESP-IDF 專案初始化與基礎結構建立
 
-- [ ] T001 Create ESP-IDF project structure with CMakeLists.txt in project root
-- [ ] T002 Configure sdkconfig.defaults with FreeRTOS settings (tick rate, stack sizes)
-- [ ] T003 [P] Create main/CMakeLists.txt with component dependencies
-- [ ] T004 [P] Create main/app_config.h with system-wide configuration constants
-- [ ] T005 [P] Create main/Kconfig.projbuild for menuconfig options
+- [x] T001 Create ESP-IDF project structure with CMakeLists.txt in project root
+- [x] T002 Configure sdkconfig.defaults with FreeRTOS settings (tick rate, stack sizes)
+- [x] T003 [P] Create main/CMakeLists.txt with component dependencies
+- [x] T004 [P] Create main/app_config.h with system-wide configuration constants
+- [x] T005 [P] Create main/Kconfig.projbuild for menuconfig options
 
 ---
 
@@ -38,15 +38,15 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T006 Create components/flight_controller/ directory structure per constitution
-- [ ] T007 [P] Define common data types in components/flight_controller/include/fc_types.h (SensorData, AttitudeState, GpsPosition, etc.)
-- [ ] T008 [P] Define error codes in components/flight_controller/include/fc_errors.h
-- [ ] T009 [P] Implement logging wrapper in components/flight_controller/src/fc_log.c
-- [ ] T010 Create FreeRTOS task handles and IPC structures in components/flight_controller/include/fc_tasks.h
-- [ ] T011 Implement static memory allocation helpers in components/flight_controller/src/fc_memory.c
-- [ ] T012 Create system event group for cross-task notifications in components/flight_controller/src/fc_events.c
-- [ ] T013 Implement NVS storage wrapper for calibration data in components/flight_controller/src/fc_nvs.c
-- [ ] T014 Write unit tests for fc_types in components/flight_controller/test/test_fc_types.c
+- [x] T006 Create components/flight_controller/ directory structure per constitution
+- [x] T007 [P] Define common data types in components/flight_controller/include/fc_types.h (SensorData, AttitudeState, GpsPosition, etc.)
+- [x] T008 [P] Define error codes in components/flight_controller/include/fc_errors.h
+- [x] T009 [P] Implement logging wrapper in components/flight_controller/src/fc_log.c
+- [x] T010 Create FreeRTOS task handles and IPC structures in components/flight_controller/include/fc_tasks.h
+- [x] T011 Implement static memory allocation helpers in components/flight_controller/src/fc_memory.c
+- [x] T012 Create system event group for cross-task notifications in components/flight_controller/src/fc_events.c
+- [x] T013 Implement NVS storage wrapper for calibration data in components/flight_controller/src/fc_nvs.c
+- [x] T014 Write unit tests for fc_types in components/flight_controller/test/test_fc_types.c
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 

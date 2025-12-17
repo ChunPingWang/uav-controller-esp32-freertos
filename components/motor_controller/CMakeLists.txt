@@ -1,0 +1,14 @@
+idf_component_register(
+    SRCS
+        "src/motor_controller.c"
+        "src/pid_controller.c"
+        "src/servo_driver.c"
+        "src/motor_task.c"
+    INCLUDE_DIRS
+        "include"
+    REQUIRES
+        flight_controller
+        driver
+    PRIV_REQUIRES
+        esp_timer
+)

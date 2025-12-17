@@ -1,0 +1,15 @@
+idf_component_register(
+    SRCS
+        "src/gps_driver.c"
+        "src/nmea_parser.c"
+        "src/navigation_controller.c"
+        "src/gps_task.c"
+        "src/nav_task.c"
+    INCLUDE_DIRS
+        "include"
+    REQUIRES
+        flight_controller
+        driver
+    PRIV_REQUIRES
+        esp_timer
+)

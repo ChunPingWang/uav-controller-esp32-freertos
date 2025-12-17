@@ -1,0 +1,114 @@
+menu "Fixed-Wing Controller Configuration"
+
+    config FC_ENABLE_DEBUG_LOG
+        bool "Enable verbose debug logging"
+        default n
+        help
+            Enable detailed debug logging for development.
+            Disable for production to reduce overhead.
+
+    config FC_ENABLE_TELEMETRY
+        bool "Enable XBee telemetry"
+        default y
+        help
+            Enable XBee telemetry communication.
+            Can be disabled for standalone testing.
+
+    config FC_ENABLE_GPS
+        bool "Enable GPS navigation"
+        default y
+        help
+            Enable GPS navigation module.
+            Can be disabled for indoor testing.
+
+    menu "IMU Configuration"
+        config IMU_I2C_SDA
+            int "IMU I2C SDA GPIO"
+            default 21
+            range 0 39
+
+        config IMU_I2C_SCL
+            int "IMU I2C SCL GPIO"
+            default 22
+            range 0 39
+
+        config IMU_SAMPLE_RATE_HZ
+            int "IMU sample rate (Hz)"
+            default 100
+            range 50 1000
+            help
+                IMU sampling frequency. Must be >= 100Hz for spec compliance.
+    endmenu
+
+    menu "GPS Configuration"
+        config GPS_UART_TX
+            int "GPS UART TX GPIO"
+            default 17
+            range 0 39
+
+        config GPS_UART_RX
+            int "GPS UART RX GPIO"
+            default 16
+            range 0 39
+
+        config GPS_UART_BAUD
+            int "GPS UART baud rate"
+            default 9600
+            range 4800 115200
+    endmenu
+
+    menu "XBee Configuration"
+        config XBEE_UART_TX
+            int "XBee UART TX GPIO"
+            default 4
+            range 0 39
+
+        config XBEE_UART_RX
+            int "XBee UART RX GPIO"
+            default 5
+            range 0 39
+
+        config XBEE_UART_BAUD
+            int "XBee UART baud rate"
+            default 115200
+            range 9600 921600
+
+        config TELEMETRY_RATE_HZ
+            int "Telemetry transmission rate (Hz)"
+            default 20
+            range 1 50
+            help
+                Telemetry data transmission frequency (FR-017).
+    endmenu
+
+    menu "Motor Configuration"
+        config MOTOR_PWM_GPIO
+            int "Motor PWM GPIO"
+            default 25
+            range 0 39
+
+        config MOTOR_PWM_FREQ
+            int "Motor PWM frequency (Hz)"
+            default 50
+            range 50 400
+            help
+                ESC PWM frequency. Standard ESCs use 50Hz.
+    endmenu
+
+    menu "Safety Configuration"
+        config FAILSAFE_TIMEOUT_SEC
+            int "Failsafe timeout (seconds)"
+            default 3
+            range 1 10
+            help
+                Communication loss timeout before RTL activation (FR-019/FR-024).
+
+        config BATTERY_LOW_MV
+            int "Low battery threshold (mV)"
+            default 3300
+            range 3000 3700
+            help
+                Per-cell voltage threshold for forced RTL (FR-026).
+    endmenu
+
+endmenu

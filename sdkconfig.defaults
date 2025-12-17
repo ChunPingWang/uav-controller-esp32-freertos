@@ -1,0 +1,88 @@
+# Fixed-Wing Controller SDK Configuration Defaults
+# ESP-IDF v5.x
+
+# =============================================================================
+# FreeRTOS Configuration
+# =============================================================================
+
+# Tick rate: 1000Hz for 1ms resolution (required for 10ms control loop)
+CONFIG_FREERTOS_HZ=1000
+
+# Enable static allocation (Constitution III)
+CONFIG_FREERTOS_SUPPORT_STATIC_ALLOCATION=y
+
+# Stack overflow detection
+CONFIG_FREERTOS_CHECK_STACKOVERFLOW_CANARY=y
+
+# Task watchdog
+CONFIG_ESP_TASK_WDT=y
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=5
+
+# =============================================================================
+# CPU Configuration
+# =============================================================================
+
+# 240MHz for maximum performance
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240=y
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ=240
+
+# =============================================================================
+# Memory Configuration
+# =============================================================================
+
+# Heap configuration
+CONFIG_HEAP_CORRUPTION_DETECTION=y
+CONFIG_HEAP_TRACING_OFF=y
+
+# =============================================================================
+# Logging Configuration (Constitution VI)
+# =============================================================================
+
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y
+CONFIG_LOG_DEFAULT_LEVEL=3
+CONFIG_LOG_MAXIMUM_LEVEL_VERBOSE=y
+CONFIG_LOG_COLORS=y
+
+# =============================================================================
+# Serial/UART Configuration
+# =============================================================================
+
+CONFIG_ESP_CONSOLE_UART_DEFAULT=y
+CONFIG_ESP_CONSOLE_UART_BAUDRATE=115200
+
+# =============================================================================
+# GPIO/Peripheral Configuration
+# =============================================================================
+
+# I2C for IMU
+CONFIG_I2C_ISR_IRAM_SAFE=y
+
+# SPI
+CONFIG_SPI_MASTER_ISR_IN_IRAM=y
+
+# =============================================================================
+# Power Management (Constitution VIII)
+# =============================================================================
+
+# Disable automatic light sleep for flight mode
+CONFIG_PM_ENABLE=n
+
+# =============================================================================
+# Partition Table
+# =============================================================================
+
+CONFIG_PARTITION_TABLE_CUSTOM=n
+CONFIG_PARTITION_TABLE_SINGLE_APP=y
+
+# =============================================================================
+# NVS (Non-Volatile Storage)
+# =============================================================================
+
+CONFIG_NVS_ENCRYPTION=n
+
+# =============================================================================
+# Unity Test Framework (Constitution VII)
+# =============================================================================
+
+CONFIG_UNITY_ENABLE_FLOAT=y
+CONFIG_UNITY_ENABLE_DOUBLE=y

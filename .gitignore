@@ -1,0 +1,46 @@
+# ESP-IDF build artifacts
+build/
+sdkconfig
+sdkconfig.old
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.*
+
+# Python (for pytest)
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# Compiled files
+*.o
+*.a
+*.so
+*.elf
+*.bin
+*.map
+
+# Dependencies (managed by ESP-IDF)
+managed_components/
+
+# Test coverage
+coverage/
+*.gcov
+*.gcda
+*.gcno
